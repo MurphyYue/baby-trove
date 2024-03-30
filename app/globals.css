@@ -31,3 +31,11 @@ body {
     text-wrap: balance;
   }
 }
+.vertical-timeline-element-icon {
+  border: none;
+  box-shadow: none !important;
+}
+.vertical-timeline::before {
+  left: 6px !important;
+  width: 2px !important;
+}

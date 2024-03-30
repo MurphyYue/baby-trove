@@ -6,7 +6,7 @@
 
 ## Todo list
 
-- [ ] show the baby's current state detial with text and picture 
+- [ ] show the baby's current state detail with text and picture 
 - [ ] show the baby's history state with timeline
 - [ ] record baby's state by texting and uploading pictures
 - [ ] storage the data in server
