@@ -32,7 +32,13 @@ export default function CreatePostForm() {
       throw new Error(signedURLResult.failure);
     }
     const { url } = signedURLResult.success;
-
+    await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": file.type,
+      },
+      body: file,
+    });
     const fileUrl = url.split("?")[0];
     return fileUrl;
   };
