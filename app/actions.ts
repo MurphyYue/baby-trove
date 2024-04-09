@@ -20,7 +20,7 @@ export async function getPublishedPostsAndMedia(): Promise<Post[]> {
       const mediaUrls = post.medias.map((media) => media.url);
       return {
         id: post.id,
-        title: post.title,
+        title: post.title || '',
         content: post.content || '',
         updateTime: dayjs(post.updatedAt.toISOString()).format("YYYY-MM-DD"),
         mediaUrl: mediaUrls[0],

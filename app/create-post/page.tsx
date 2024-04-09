@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { getSignedURL } from "./actions";
+import { getSignedURL, createPost } from "./actions";
 
 export default function CreatePostForm() {
   const [statusMessage, setStatusMessage] = useState("");
@@ -31,7 +30,7 @@ export default function CreatePostForm() {
     if (signedURLResult.failure !== undefined) {
       throw new Error(signedURLResult.failure);
     }
-    const { url } = signedURLResult.success;
+    const { url, id: fileId } = signedURLResult.success;
     await fetch(url, {
       method: "PUT",
       headers: {
@@ -39,21 +38,21 @@ export default function CreatePostForm() {
       },
       body: file,
     });
-    const fileUrl = url.split("?")[0];
-    return fileUrl;
+    return fileId;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
+      let fileId: number | undefined = undefined;
       if (file) {
         setStatusMessage("Uploading...");
-        await handleFileUpload(file);
+        fileId = await handleFileUpload(file);
       }
 
-      // setStatusMessage("Posting post...");
-
+      setStatusMessage("Posting post...");
+      await createPost({ content, mediaId: fileId });
       setStatusMessage("Post Successful");
     } catch (error) {
       console.error(error);
@@ -78,7 +77,7 @@ export default function CreatePostForm() {
   };
   return (
     <>
-      <form className="border border-neutral-500 rounded-lg px-6 py-4" onSubmit={handleSubmit}>
+      <form className="border border-neutral-500 rounded-lg px-6 py-4 mt-4" onSubmit={handleSubmit}>
         {statusMessage && (
           <p className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 mb-4 rounded relative">
             {statusMessage}

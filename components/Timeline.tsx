@@ -11,7 +11,7 @@ export interface TimelineProps {
 
 export interface Post {
   id: number;
-  title: string;
+  title?: string;
   updateTime: string;
   content?: string;
   mediaUrl: string;

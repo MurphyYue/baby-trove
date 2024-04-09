@@ -1,8 +1,11 @@
 "use server"
 
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
+import prisma from "@/lib/prisma";
 
 const allowedFileTypes = ["image/jpeg", "image/png", "video/mp4", "video/quicktime"];
 
@@ -17,6 +20,46 @@ type GetSignedURLParams = {
   checksum: string;
 };
 
+export const createPost = async ({
+  content,
+  mediaId
+}: {
+  content?: string,
+  mediaId?: number
+}) => {
+  if (!content || content.length < 1) {
+    return { failure: "not enough content" };
+  }
+  if (mediaId) {
+    const result = await prisma.media.findUnique({
+      where: { id: mediaId },
+    });
+    if (result === null) {
+      return { failure: "not enough content" };
+    }
+  }
+  const result = await prisma.post.create({
+    data: {
+      content: content,
+      published: true,
+      author: { connect: { email: "murphyyue@icloud.com" } },
+      medias: { connect: { id: mediaId } },
+    },
+  });
+  if (mediaId) {
+    await prisma.media.update({
+      where: {
+        id: mediaId,
+      },
+      data: {
+        postId: result.id,
+      },
+    });
+  }
+  revalidatePath("/");
+  redirect("/");
+}
+
 export const getSignedURL = async ({
   fileType,
   fileSize,
@@ -30,7 +73,6 @@ export const getSignedURL = async ({
     return { failure: "File size too large" };
   }
 
-  console.log(process.env.AWS_ACCESS_KEY!, process.env.AWS_SECRET_ACCESS_KEY!);
   const s3Client = new S3Client({
     region: process.env.AWS_BUCKET_REGION!,
     credentials: {
@@ -53,7 +95,11 @@ export const getSignedURL = async ({
     putObjectCommand,
     { expiresIn: 60 }, // 60 seconds
   );
-
-  console.log({ success: url });
-  return { success: { url } };
+  const result = await prisma.media.create({
+    data: {
+      url: url.split("?")[0],
+      type: fileType.startsWith("image") ? "image" : "video",
+    },
+  });
+  return { success: { url, id: result.id } };
 };
