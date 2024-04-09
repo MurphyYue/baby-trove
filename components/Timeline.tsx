@@ -12,6 +12,7 @@ export interface TimelineProps {
 export interface Post {
   id: number;
   title: string;
+  updateTime: string;
   content?: string;
   mediaUrl: string;
 }
@@ -30,7 +31,7 @@ export default function Timeline(posts: TimelineProps) {
             padding: "1.3rem 2rem",
           }}
           dateClassName="text-black"
-          date="2022-10-01"
+          date={post.updateTime}
           icon={<div className="h-3 w-3 rounded-full bg-red-500"></div>}
         >
           <Image

@@ -1,7 +1,8 @@
 import prisma from "@/lib/prisma";
-import { TimelineProps } from "@/components/Timeline";
+import { Post } from "@/components/Timeline";
+import dayjs from "dayjs";
 
-export async function getPublishedPostsAndMedia(): Promise<TimelineProps> {
+export async function getPublishedPostsAndMedia(): Promise<Post[]> {
   try {
     // 查询所有 published 为 true 的帖子
     const publishedPosts = await prisma.post.findMany({
@@ -20,7 +21,8 @@ export async function getPublishedPostsAndMedia(): Promise<TimelineProps> {
       return {
         id: post.id,
         title: post.title,
-        content: post.content,
+        content: post.content || '',
+        updateTime: dayjs(post.updatedAt.toISOString()).format("YYYY-MM-DD"),
         mediaUrl: mediaUrls[0],
       };
     });
