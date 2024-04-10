@@ -1,7 +1,12 @@
 import Timeline from "@/components/Timeline";
 import { Post } from "@/components/Timeline";
-
+import { Metadata } from "next";
 import { getPublishedPostsAndMedia } from "./actions";
+
+export const metadata: Metadata = {
+  title: 'Baby Trove',
+  description: 'my baby, my trove'
+}
 
 export default async function Home() {
   const posts: Post[] = await getPublishedPostsAndMedia();

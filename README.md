@@ -10,7 +10,7 @@
 - [x] show the baby's history state with timeline
 - [x] record baby's state by texting and uploading pictures
 - [x] storage the data in server
-- [ ] add more pages
+- [ ] add more pages, user profile, login
 - [ ] add auth
 
 ## Getting Started
