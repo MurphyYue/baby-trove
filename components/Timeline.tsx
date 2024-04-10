@@ -1,6 +1,5 @@
 
 import React from "react";
-import "react-vertical-timeline-component/style.min.css";
 import Image from "next/image";
 import { getPublishedPostsAndMedia } from "@/app/actions";
 
