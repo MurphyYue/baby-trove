@@ -3,11 +3,6 @@
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { getSignedURL, createPost } from "./actions";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: 'add new post'
-}
 
 export default function CreatePostForm() {
   const [statusMessage, setStatusMessage] = useState("");

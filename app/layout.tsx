@@ -2,15 +2,18 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
+import NextAuthProvider from "./NextAuthProvider"
 
 const inter = Inter({ subsets: ["latin"] });
 
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout(
+  {
+    children,
+  }: Readonly<{
+    children: React.ReactNode;
+  }>
+) {
   return (
     <html lang="en">
       <body
@@ -19,8 +22,10 @@ export default function RootLayout({
           "relative bg-white text-black dark:bg-black dark:text-white",
         )}
       >
-        <Navbar />
-        {children}
+        <NextAuthProvider>
+          <Navbar />
+          {children}
+        </NextAuthProvider>
       </body>
     </html>
   );
