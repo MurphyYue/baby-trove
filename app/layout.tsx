@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
 
@@ -23,6 +24,7 @@ export default function RootLayout({
           "relative bg-white text-black dark:bg-black dark:text-white",
         )}
       >
+        <Navbar />
         {children}
       </body>
     </html>
