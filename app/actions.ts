@@ -22,7 +22,7 @@ export async function getPublishedPostsAndMedia(): Promise<Post[]> {
         id: post.id,
         title: post.title || '',
         content: post.content || '',
-        updateTime: dayjs(post.updatedAt.toISOString()).format("YYYY-MM-DD"),
+        updateTime: dayjs(post.updatedAt.toISOString()).format("YYYY-MM-DD hh:mm:ss"),
         mediaUrl: mediaUrls[0],
       };
     });

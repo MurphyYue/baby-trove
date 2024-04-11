@@ -10,7 +10,6 @@ const options = {
   ],
   secret: process.env.SECRET,
 };
-console.log(options)
 const authHandler = NextAuth(options);
 export { authHandler as GET, authHandler as POST };
 
