@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { getSignedURL, createPost } from "./actions";
+import { useSession } from "next-auth/react";
 
 export default function CreatePostForm() {
+  const { data: session, status } = useSession();
   const [statusMessage, setStatusMessage] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -45,6 +47,10 @@ export default function CreatePostForm() {
     e.preventDefault();
     setLoading(true);
     try {
+      console.log("++++++session++++", session);
+      if (!session) {
+        throw new Error("no auth");
+      }
       let fileId: number | undefined = undefined;
       if (file) {
         setStatusMessage("Uploading...");
@@ -56,7 +62,7 @@ export default function CreatePostForm() {
       setStatusMessage("Post Successful");
     } catch (error) {
       console.error(error);
-      setStatusMessage("Post failed");
+      setStatusMessage(String(error) || "Post failed");
     } finally {
       setLoading(false);
     }

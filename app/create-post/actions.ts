@@ -6,6 +6,9 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
 import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth/next";
+import { OPTIONS } from '@/app/api/auth/[...nextauth]/route'
+
 
 const allowedFileTypes = ["image/jpeg", "image/png", "video/mp4", "video/quicktime"];
 
@@ -38,15 +41,29 @@ export const createPost = async ({
       return { failure: "not enough content" };
     }
   }
-  const result = await prisma.post.create({
-    data: {
-      content: content,
-      published: true,
-      author: { connect: { email: "murphyyue@icloud.com" } },
-      medias: { connect: { id: mediaId } },
-    },
-  });
+  const session = await getServerSession(OPTIONS);
+  if (!session) {
+    return { failure: "not enough content" };
+  }
+  let result;
+  if (!mediaId) {
+    result = await prisma.post.create({
+      data: {
+        content: content,
+        published: true,
+        author: { connect: { email: session.user?.email || '' } },
+      },
+    });
+  }
   if (mediaId) {
+    result = await prisma.post.create({
+      data: {
+        content: content,
+        published: true,
+        author: { connect: { email: "murphyyue@icloud.com" } },
+        medias: { connect: { id: mediaId } },
+      },
+    });
     await prisma.media.update({
       where: {
         id: mediaId,
