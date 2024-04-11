@@ -7,7 +7,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
-import { OPTIONS } from '@/app/api/auth/[...nextauth]/route'
+import { OPTIONS } from "@/app/api/auth/[...nextauth]/option";
 
 
 const allowedFileTypes = ["image/jpeg", "image/png", "video/mp4", "video/quicktime"];
