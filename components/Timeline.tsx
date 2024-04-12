@@ -18,20 +18,25 @@ export interface Post {
 export default async function Timeline() {
   const posts: Post[] = await getPublishedPostsAndMedia();
   return (
-    <section className="text-black">
+    <ol className="relative border-s border-gray-200 dark:border-gray-700">
       {posts.map((post) => (
-        <div key={post.id}>
-          <span>{post.updateTime}</span>
-          <span>{post.content}</span>
-          <Image
-            src={post.mediaUrl}
-            width={128}
-            height={128}
-            alt="Baby 1"
-            className="w-full md:w-1/2 mb-4 md:mr-4"
-          />
-        </div>
+        <li className="mb-10 ms-6" key={post.id}>
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+          <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+            {post.updateTime}
+          </time>
+          <div className="items-center justify-between p-4 bg-white rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
+            <Image
+              className="h-auto max-w-full rounded-lg"
+              src={post.mediaUrl}
+              alt="Bonnie image"
+              width={350}
+              height={200}
+            />
+            <p className="text-1xl text-gray-900 dark:text-white mt-2">{post.content}</p>
+          </div>
+        </li>
       ))}
-    </section>
+    </ol>
   );
 };

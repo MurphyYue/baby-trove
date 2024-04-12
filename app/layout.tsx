@@ -19,7 +19,7 @@ export default function RootLayout(
       <body
         className={twMerge(
           inter.className,
-          "relative bg-white text-black dark:bg-black dark:text-white",
+          "relative bg-white text-black dark:bg-black dark:text-white p-2",
         )}
       >
         <NextAuthProvider>
