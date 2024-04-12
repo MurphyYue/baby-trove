@@ -9,7 +9,7 @@ export async function getPublishedPostsAndMedia(): Promise<Post[]> {
   try {
     const session = await getServerSession(OPTIONS);
     if (!session?.user?.email) {
-      redirect("/api/auth/signin");
+      redirect("/user");
     }
     // 查询所有 published 为 true 的帖子
     const publishedPosts = await prisma.post.findMany({
