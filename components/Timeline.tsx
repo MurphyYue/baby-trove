@@ -17,7 +17,6 @@ export interface Post {
 
 export default async function Timeline() {
   const posts: Post[] = await getPublishedPostsAndMedia();
-  console.log(posts);
   return (
     <ol className="relative border-s border-gray-200 dark:border-gray-700">
       {posts.map((post) => (

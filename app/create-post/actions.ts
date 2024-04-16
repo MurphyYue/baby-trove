@@ -34,14 +34,14 @@ export const createPost = async ({
     return { failure: "not enough content" };
   }
 
-  // if (mediaIds) {
-  //   const result = await prisma.media.findUnique({
-  //     where: { id: mediaId },
-  //   });
-  //   if (result === null) {
-  //     return { failure: "not enough content" };
-  //   }
-  // }
+  if (mediaIds) {
+    const result = await prisma.media.findUnique({
+      where: { id: mediaId },
+    });
+    if (result === null) {
+      return { failure: "not enough content" };
+    }
+  }
   const session = await getServerSession(OPTIONS);
   if (!session) {
     return { failure: "please login" };
@@ -56,6 +56,12 @@ export const createPost = async ({
   });
   if (mediaIds && mediaIds?.length > 0) {
     for (const mediaId of mediaIds) {
+      const result1 = await prisma.media.findUnique({
+        where: { id: mediaId },
+      });
+      if (result1 === null) {
+        return { failure: "there are some images can't find in the server " };
+      }
       result = await prisma.post.update({
         where: {
           id: result.id,
@@ -74,7 +80,6 @@ export const createPost = async ({
       });
     }
   }
-  console.log(result);
   revalidatePath("/");
   redirect("/");
 }

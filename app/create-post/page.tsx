@@ -29,7 +29,6 @@ export default function CreatePostForm() {
   };
 
   const handleFileUpload = async (file: File) => {
-    console.log(file)
     const signedURLResult = await getSignedURL({
       fileSize: file.size,
       fileType: file.type,
@@ -62,7 +61,6 @@ export default function CreatePostForm() {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log("++++++session++++", session);
       if (!session) {
         throw new Error("no auth");
       }
@@ -71,7 +69,6 @@ export default function CreatePostForm() {
         setStatusMessage("Uploading...");
         fileIds = await handleFilesUpload(images);
       }
-      console.log(fileIds);
       setStatusMessage("Posting post...");
       await createPost({ content, mediaIds: fileIds });
       setStatusMessage("Post Successful");
@@ -96,19 +93,6 @@ export default function CreatePostForm() {
       const _files = Array.from(files);
       setImages(_files);
     }
-    
-
-    // const file = files?.[0] ?? null;
-    // setFile(file);
-    // if (previewUrl) {
-    //   URL.revokeObjectURL(previewUrl);
-    // }
-    // if (file) {
-    //   const url = URL.createObjectURL(file);
-    //   setPreviewUrl(url);
-    // } else {
-    //   setPreviewUrl(null);
-    // }
   };
   const deImage = (name: string) => {
     const files = images.filter(image => image.name !== name);
@@ -184,7 +168,7 @@ export default function CreatePostForm() {
                   name="media"
                   type="file"
                   multiple
-                  accept="image/jpeg,image/png,video/mp4,video/quicktime"
+                  accept="image/jpeg,image/png"
                   onChange={handleFileChange}
                 />
               </label>
