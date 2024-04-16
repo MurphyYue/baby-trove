@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { getSignedURL, createPost } from "./actions";
 import { useSession } from "next-auth/react";
@@ -12,10 +12,9 @@ import { AiFillDelete } from "react-icons/ai";
 export default function CreatePostForm() {
   const { data: session, status } = useSession();
   const [statusMessage, setStatusMessage] = useState("");
+  const [progressNum, setProgressNum] = useState<number>(0);
   const [content, setContent] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [images, setImages] = useState<File[]>([]);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const buttonDisabled = content.length < 1 || loading;
@@ -50,8 +49,11 @@ export default function CreatePostForm() {
 
   const handleFilesUpload = async (files: File[]) => {
     const fileIds: number[] = [];
+    const len = files.length;
+    const step: number = 0.8 / len;
     for (const file of files) {
       const fileId = await handleFileUpload(file);
+      setProgressNum((prevProgressNum) => prevProgressNum + step);
       fileIds.push(fileId);
     }
     return fileIds;
@@ -67,10 +69,12 @@ export default function CreatePostForm() {
       let fileIds: number[] | undefined = undefined;
       if (images) {
         setStatusMessage("Uploading...");
+        setProgressNum(0.1);
         fileIds = await handleFilesUpload(images);
       }
       setStatusMessage("Posting post...");
       await createPost({ content, mediaIds: fileIds });
+      setProgressNum(1);
       setStatusMessage("Post Successful");
     } catch (error) {
       console.error(error);
@@ -100,6 +104,16 @@ export default function CreatePostForm() {
   };
   return (
     <>
+      <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+        {
+          progressNum > 0 && <div
+            className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+            style={{ width: progressNum * 100 + "%" }}
+          >
+            {progressNum * 100 + "%"}
+          </div>
+        }
+      </div>
       <form className="px-4 py-4" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center mb-3">
           <Link

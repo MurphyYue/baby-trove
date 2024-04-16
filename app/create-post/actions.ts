@@ -33,15 +33,6 @@ export const createPost = async ({
   if (!content || content.length < 1) {
     return { failure: "not enough content" };
   }
-
-  if (mediaIds) {
-    const result = await prisma.media.findUnique({
-      where: { id: mediaId },
-    });
-    if (result === null) {
-      return { failure: "not enough content" };
-    }
-  }
   const session = await getServerSession(OPTIONS);
   if (!session) {
     return { failure: "please login" };
