@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "baby-trove.s3.ap-southeast-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
 };

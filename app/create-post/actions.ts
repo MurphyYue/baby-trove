@@ -25,54 +25,56 @@ type GetSignedURLParams = {
 
 export const createPost = async ({
   content,
-  mediaId
+  mediaIds
 }: {
   content?: string,
-  mediaId?: number
+  mediaIds?: number[]
 }) => {
   if (!content || content.length < 1) {
     return { failure: "not enough content" };
   }
-  if (mediaId) {
-    const result = await prisma.media.findUnique({
-      where: { id: mediaId },
-    });
-    if (result === null) {
-      return { failure: "not enough content" };
-    }
-  }
+
+  // if (mediaIds) {
+  //   const result = await prisma.media.findUnique({
+  //     where: { id: mediaId },
+  //   });
+  //   if (result === null) {
+  //     return { failure: "not enough content" };
+  //   }
+  // }
   const session = await getServerSession(OPTIONS);
   if (!session) {
-    return { failure: "not enough content" };
+    return { failure: "please login" };
   }
   let result;
-  if (!mediaId) {
-    result = await prisma.post.create({
-      data: {
-        content: content,
-        published: true,
-        author: { connect: { email: session.user?.email || '' } },
-      },
-    });
+  result = await prisma.post.create({
+    data: {
+      content: content,
+      published: true,
+      author: { connect: { email: session.user?.email! } },
+    },
+  });
+  if (mediaIds && mediaIds?.length > 0) {
+    for (const mediaId of mediaIds) {
+      result = await prisma.post.update({
+        where: {
+          id: result.id,
+        },
+        data: {
+          medias: { connect: { id: mediaId } },
+        },
+      });
+      await prisma.media.update({
+        where: {
+          id: mediaId,
+        },
+        data: {
+          postId: result.id,
+        },
+      });
+    }
   }
-  if (mediaId) {
-    result = await prisma.post.create({
-      data: {
-        content: content,
-        published: true,
-        author: { connect: { email: "murphyyue@icloud.com" } },
-        medias: { connect: { id: mediaId } },
-      },
-    });
-    await prisma.media.update({
-      where: {
-        id: mediaId,
-      },
-      data: {
-        postId: result.id,
-      },
-    });
-  }
+  console.log(result);
   revalidatePath("/");
   redirect("/");
 }

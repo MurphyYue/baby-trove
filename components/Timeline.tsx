@@ -12,11 +12,12 @@ export interface Post {
   title?: string;
   updateTime: string;
   content?: string;
-  mediaUrl: string;
+  mediaUrls: string[];
 }
 
 export default async function Timeline() {
   const posts: Post[] = await getPublishedPostsAndMedia();
+  console.log(posts);
   return (
     <ol className="relative border-s border-gray-200 dark:border-gray-700">
       {posts.map((post) => (
@@ -26,13 +27,16 @@ export default async function Timeline() {
             {post.updateTime}
           </time>
           <div className="items-center justify-between p-4 bg-white rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={post.mediaUrl}
-              alt="Bonnie image"
-              width={350}
-              height={200}
-            />
+            {post.mediaUrls.map((mediaUrl) => (
+              <Image
+                key={mediaUrl}
+                className="h-auto max-w-full rounded-lg"
+                src={mediaUrl}
+                alt="Bonnie image"
+                width={350}
+                height={200}
+              />
+            ))}
             <p className="text-1xl text-gray-900 dark:text-white mt-2">{post.content}</p>
           </div>
         </li>

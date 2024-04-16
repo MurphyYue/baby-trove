@@ -1,15 +1,22 @@
 'use client'
 
 import { signOut, signIn,  useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function User() {
   const { data: session, status } = useSession();
-  console.log(session)
+  console.log("session", session);
   return session ? (
-    <div>
-      <p>
-        {session?.user?.name} ({session?.user?.email})
-      </p>
+    <div className="flex items-center flex-col">
+      <Image
+        className="rounded-full m-2"
+        src={session.user?.image || ""}
+        width={80}
+        height={80}
+        alt="avatar image"
+      />
+      <div>{session?.user?.name}</div>
+      <div className="text-slate-500 mb-2">{session?.user?.email}</div>
       <button
         type="button"
         onClick={() => signOut()}
