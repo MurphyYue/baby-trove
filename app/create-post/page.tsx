@@ -86,7 +86,7 @@ export default function CreatePostForm() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files: FileList | null = e.target.files;
-    if (files && files.length > 9) {
+    if (files && (files.length + images.length) > 9) {
       alert("You can only upload up to 9 images.");
       return;
     }
@@ -95,7 +95,7 @@ export default function CreatePostForm() {
     }
     if (files && files.length >= 1) {
       const _files = Array.from(files);
-      setImages(_files);
+      setImages((prevImages) => [...prevImages, ..._files]);
     }
   };
   const deImage = (name: string) => {
@@ -105,14 +105,14 @@ export default function CreatePostForm() {
   return (
     <>
       <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-        {
-          progressNum > 0 && <div
+        {progressNum > 0 && (
+          <div
             className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
             style={{ width: progressNum * 100 + "%" }}
           >
             {progressNum * 100 + "%"}
           </div>
-        }
+        )}
       </div>
       <form className="px-4 py-4" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center mb-3">
@@ -160,8 +160,8 @@ export default function CreatePostForm() {
                     key={image.name}
                   >
                     <Image
-                      width={96}
-                      height={96}
+                      layout="fill"
+                      objectFit="cover"
                       src={src}
                       alt="Selected file"
                       className="min-w-24 h-auto absolute left-0 top-0"
@@ -174,7 +174,12 @@ export default function CreatePostForm() {
                 );
               })}
               <label className="mt-2">
-                <div className="flex justify-center items-center w-24 h-24 bg-slate-200">
+                <div
+                  className={twMerge(
+                    "flex justify-center items-center w-24 h-24 bg-slate-200 ml-2 mr-2",
+                    images.length === 9 && "hidden",
+                  )}
+                >
                   <AiOutlinePlus className="w-14 h-14" />
                 </div>
                 <input
