@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { getPublishedPostsAndMedia } from "@/app/actions";
+import ImagePreview from './ImagePreview'
 
 export interface TimelineProps {
   posts: Post[];
@@ -26,16 +27,7 @@ export default async function Timeline() {
             {post.updateTime}
           </time>
           <div className="items-center justify-between p-4 bg-white rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
-            {post.mediaUrls.map((mediaUrl) => (
-              <Image
-                key={mediaUrl}
-                className="h-auto max-w-full rounded-lg"
-                src={mediaUrl}
-                alt="Bonnie image"
-                width={350}
-                height={200}
-              />
-            ))}
+            <ImagePreview images={post.mediaUrls} />
             <p className="text-1xl text-gray-900 dark:text-white mt-2">{post.content}</p>
           </div>
         </li>
