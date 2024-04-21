@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white">
+    <div className="flex justify-center items-center min-h-screen bg-white dark:bg-black">
       <div className="max-w-lg w-full">
         <Suspense fallback={<Loading />}>
           <Timeline />

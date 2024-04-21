@@ -173,14 +173,14 @@ export default function CreatePostForm() {
                   </div>
                 );
               })}
-              <label className="mt-2">
+              <label className="mt-2 dark:bg-gray-700">
                 <div
                   className={twMerge(
-                    "flex justify-center items-center w-24 h-24 bg-slate-200 ml-2 mr-2",
+                    "flex justify-center items-center w-24 h-24 bg-slate-200 ml-2 mr-2 dark:bg-gray-700",
                     images.length === 9 && "hidden",
                   )}
                 >
-                  <AiOutlinePlus className="w-14 h-14" />
+                  <AiOutlinePlus className="w-14 h-14 dark:bg-gray-700" />
                 </div>
                 <input
                   className="bg-transparent flex-1 border-none outline-none hidden"
