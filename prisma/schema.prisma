@@ -20,32 +20,6 @@ model Post {
   medias    Media[]
 }
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
-  user               User     @relation(fields: [userId], references:[id], onDelete: Cascade)
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique@map("session_token")
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields:[userId], references:[id], onDelete: Cascade)
-}
 
 model Profile {
   id            Int        @id @default(autoincrement())
@@ -61,8 +35,6 @@ model User {
   image         String?
   posts         Post[]
   profile       Profile?
-  accounts      Account[]
-  sessions      Session[]
 }
 
 model VerificationToken {

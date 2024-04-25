@@ -1,6 +1,5 @@
 
 import React from "react";
-import Image from "next/image";
 import { getPublishedPostsAndMedia } from "@/app/actions";
 import ImagePreview from './ImagePreview'
 

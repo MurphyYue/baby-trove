@@ -6,14 +6,15 @@
 
 ## Todo list
 
-- [ ] show the baby's current state detail with text and picture 
+- [x] show the baby's current state detail with text and picture 
 - [x] show the baby's history state with timeline
 - [x] record baby's state by texting and uploading pictures
 - [x] storage the data in server
 - [x] add more pages, user profile, login
 - [x] add auth
-- [ ] improve the home page style
-- [ ] add picture preview
+- [x] improve the home page style
+- [x] add picture preview
+- [ ] add sign up(user management)
 
 ## Getting Started
 
