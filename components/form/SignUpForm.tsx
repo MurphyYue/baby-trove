@@ -1,10 +1,32 @@
 "use client"
 import { Input, Button, Form } from 'antd-mobile';
+import { useRouter } from 'next/navigation';
 
 const SignInForm: React.FC = () => {
-  const onFinish = (values: any) => {
-    // const { username, email, password, confirmPassword } = values;
-    console.log(values);
+  const router = useRouter();
+  const onFinish = async (values: any) => {
+    const { username, email, password, confirmPassword } = values;
+    if (password !== confirmPassword) {
+      alert("password do not match");
+      return;
+    }
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+    });
+    console.log(response.json())
+    if (response.ok) {
+      router.push('/sign-in')
+    } else {
+      console.error('something went wrong when sign up')
+    }
   }
   const onValuesChange = (changedValues: any, values: any) => {
     if (changedValues.password || changedValues.confirmPassword) {
@@ -17,7 +39,7 @@ const SignInForm: React.FC = () => {
     <>
       <Form
         onFinish={onFinish}
-        onValuesChange={onValuesChange}
+        // onValuesChange={onValuesChange}
         footer={
           <Button block type='submit' color='primary' size='large'>
             sign up
