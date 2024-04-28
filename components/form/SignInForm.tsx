@@ -29,7 +29,7 @@ const SignInForm: React.FC = () => {
       </Form>
       <div className="text-center">
         <p className="text-sm">
-          Don't have an account? <a href="/sign-up" className="text-blue-500">Sign Up</a>
+          Do not have an account? <a href="/sign-up" className="text-blue-500">Sign Up</a>
         </p>
       </div>
     </>
