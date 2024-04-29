@@ -7,7 +7,7 @@ interface GithubSignInButtonProps {
 }
 
 const GithubSignInButton: FC<GithubSignInButtonProps> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const signInWithGithub = async () => {
     try {
       setLoading(true);

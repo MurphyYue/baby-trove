@@ -14,7 +14,8 @@
 - [x] add auth
 - [x] improve the home page style
 - [x] add picture preview
-- [ ] add sign up(user management)
+- [x] add sign up(user management)
+- [ ] update home page style and no data tip
 
 ## Getting Started
 
