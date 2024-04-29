@@ -1,5 +1,5 @@
 "use client"
-import { Input, Button, Form } from 'antd-mobile';
+import { Input, Button, Form, Toast } from 'antd-mobile';
 import { useRouter } from 'next/navigation';
 
 const SignInForm: React.FC = () => {
@@ -7,7 +7,10 @@ const SignInForm: React.FC = () => {
   const onFinish = async (values: any) => {
     const { username, email, password, confirmPassword } = values;
     if (password !== confirmPassword) {
-      alert("password do not match");
+      Toast.show({
+        icon: 'fail',
+        content: "password do not match",
+      })
       return;
     }
     const response = await fetch("/api/user", {
@@ -21,25 +24,16 @@ const SignInForm: React.FC = () => {
         password,
       }),
     });
-    console.log(response.json())
     if (response.ok) {
       router.push('/sign-in')
     } else {
       console.error('something went wrong when sign up')
     }
   }
-  const onValuesChange = (changedValues: any, values: any) => {
-    if (changedValues.password || changedValues.confirmPassword) {
-        if (values.confirmPassword && values.password && values.confirmPassword !== values.password) {
-            alert('password do not match')
-        }
-    }
-  }
   return (
     <>
       <Form
         onFinish={onFinish}
-        // onValuesChange={onValuesChange}
         footer={
           <Button block type='submit' color='primary' size='large'>
             sign up

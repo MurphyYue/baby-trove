@@ -7,7 +7,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
-import { OPTIONS } from "@/app/api/auth/[...nextauth]/option";
+import { authOptions } from "@/lib/auth";
 
 
 const allowedFileTypes = ["image/jpeg", "image/png", "video/mp4", "video/quicktime"];
@@ -33,9 +33,9 @@ export const createPost = async ({
   if (!content || content.length < 1) {
     return { failure: "not enough content" };
   }
-  const session = await getServerSession(OPTIONS);
+  const session = await getServerSession(authOptions);
   if (!session) {
-    return { failure: "please login" };
+    return { failure: "please sign in" };
   }
   let result;
   result = await prisma.post.create({

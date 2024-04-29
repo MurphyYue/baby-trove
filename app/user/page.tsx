@@ -19,10 +19,13 @@ export default function User() {
       <div className="text-slate-500 mb-2">{session?.user?.email}</div>
       <button
         type="button"
-        onClick={() => signOut()}
+        onClick={() => signOut({
+          redirect: true,
+          callbackUrl: `${window.location.origin}/sign-in`
+        })}
         className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
       >
-        <a>Log out</a>
+        <a>Sign out</a>
       </button>
     </div>
   ) : (
@@ -31,7 +34,7 @@ export default function User() {
       onClick={() => signIn()}
       className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
     >
-      <a>Log in</a>
+      <a>Sign in</a>
     </button>
   );
 }

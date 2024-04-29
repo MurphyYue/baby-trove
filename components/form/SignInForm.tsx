@@ -1,9 +1,24 @@
 "use client"
-import { Input, Button, Form } from 'antd-mobile';
+import { Input, Button, Form, Toast } from 'antd-mobile';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const SignInForm: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log(values);
+  const router = useRouter();
+  const onFinish = async (values: any) => {
+    const signinData = await signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      redirect: false
+    });
+    if (!signinData?.ok) {
+      Toast.show({
+        icon: 'fail',
+        content: signinData?.error,
+      })
+    } else {
+      router.push('/')
+    }
   }
   return (
     <>

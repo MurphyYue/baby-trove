@@ -2,12 +2,12 @@ import prisma from "@/lib/prisma";
 import { Post } from "@/components/Timeline";
 import dayjs from "dayjs";
 import { getServerSession } from "next-auth/next";
-import { OPTIONS } from '@/app/api/auth/[...nextauth]/option'
+import { authOptions } from '@/lib/auth'
 import { redirect } from "next/navigation";
 
 export async function getPublishedPostsAndMedia(): Promise<Post[]> {
   try {
-    const session = await getServerSession(OPTIONS);
+    const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       redirect("/user");
     }
