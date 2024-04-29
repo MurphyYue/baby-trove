@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Post } from "@/components/Timeline";
 import dayjs from "dayjs";
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth";
 import { authOptions } from '@/lib/auth'
 import { redirect } from "next/navigation";
 
@@ -9,7 +9,7 @@ export async function getPublishedPostsAndMedia(): Promise<Post[]> {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
-      redirect("/user");
+      redirect("/sign-in");
     }
     // 查询所有 published 为 true 的帖子
     const publishedPosts = await prisma.post.findMany({

@@ -3,18 +3,23 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from './prisma'
 import { compareHashPassword } from "./utils";
+import GitHubProvider from "next-auth/providers/github";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
-    maxAge: 7 * 24 * 60 * 60, 
+    maxAge: 7 * 24 * 60 * 60,
   },
   pages: {
     signIn: '/sign-in',
   },
   providers: [
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -33,10 +38,13 @@ export const authOptions: NextAuthOptions = {
         if (!existingUser) {
           return null;
         }
-        const existingpassword = compareHashPassword(credentials?.password, existingUser.password);
-        if (!existingpassword.success) {
-          return null;
+        if (existingUser.password) {
+          const existingpassword = compareHashPassword(credentials?.password, existingUser.password);
+          if (!existingpassword.success) {
+            return null;
+          }
         }
+
         return {
           id: existingUser.id,
           username: existingUser.username,

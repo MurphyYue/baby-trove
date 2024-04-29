@@ -2,6 +2,7 @@
 import { Input, Button, Form, Toast } from 'antd-mobile';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import GithubSignInButton from '@/components/GithubSignInButton'
 
 const SignInForm: React.FC = () => {
   const router = useRouter();
@@ -42,6 +43,9 @@ const SignInForm: React.FC = () => {
           <Input placeholder='please input password' clearable type='password' />
         </Form.Item>
       </Form>
+      <div className="text-center p-3">
+        <GithubSignInButton>sign in with github</GithubSignInButton>
+      </div>
       <div className="text-center">
         <p className="text-sm">
           Do not have an account? <a href="/sign-up" className="text-blue-500">Sign Up</a>

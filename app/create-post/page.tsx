@@ -8,6 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillDelete } from "react-icons/ai";
+// import { getServerSession } from "next-auth";
 
 export default function CreatePostForm() {
   const { data: session, status } = useSession();
