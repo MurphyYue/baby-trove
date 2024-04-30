@@ -1,5 +1,5 @@
 "use client"
-import Navbar from "@/components/Navbar";
+import TabBar from "@/components/TabBar";
 import NextAuthProvider from "@/lib/NextAuthProvider"
 
 
@@ -12,7 +12,7 @@ export default function Layout(
 ) {
   return (
     <NextAuthProvider>
-      <Navbar />
+      <TabBar />
       {children}
     </NextAuthProvider>
   );

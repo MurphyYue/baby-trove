@@ -20,7 +20,7 @@ export default function RootLayout(
       <body
         className={twMerge(
           inter.className,
-          "relative bg-white text-black dark:bg-black dark:text-white p-2 h-lvh",
+          "relative bg-white text-black dark:bg-black dark:text-white h-lvh",
         )}
       >
         <ConfigProvider locale={enUS}>
