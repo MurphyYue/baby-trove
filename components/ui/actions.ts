@@ -1,9 +1,16 @@
 import prisma from "@/lib/prisma";
-import { Post } from "@/components/Timeline";
 import dayjs from "dayjs";
 import { getServerSession } from "next-auth";
 import { authOptions } from '@/lib/auth'
 import { redirect } from "next/navigation";
+
+export interface Post {
+  id: number;
+  title?: string;
+  updateTime: string;
+  content?: string;
+  mediaUrls: string[];
+}
 
 export async function getPublishedPostsAndMedia(): Promise<Post[]> {
   try {

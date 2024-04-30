@@ -1,7 +1,8 @@
-import Timeline from "@/components/Timeline";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import Loading from "@/app/Loading";
+import Navbar from "@/components/Navbar";
+import HomeUi from '@/components/ui/Home';
 
 export const metadata: Metadata = {
   title: 'Baby Trove',
@@ -10,10 +11,11 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white dark:bg-black">
-      <div className="max-w-lg w-full">
+    <div className="flex h-full justify-center bg-white dark:bg-black">
+      <div className="max-w-lg w-full h-full">
+        <Navbar />
         <Suspense fallback={<Loading />}>
-          <Timeline />
+          <HomeUi />
         </Suspense>
       </div>
     </div>

@@ -15,7 +15,7 @@ const SignInForm: React.FC = () => {
     if (!signinData?.ok) {
       Toast.show({
         icon: 'fail',
-        content: signinData?.error,
+        content: 'wrong email or password',
       })
     } else {
       router.push('/')

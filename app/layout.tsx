@@ -1,9 +1,7 @@
 "use client"
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
-import NextAuthProvider from "./NextAuthProvider"
 import { ConfigProvider } from "antd-mobile";
 import enUS from 'antd-mobile/es/locales/en-US'
 
@@ -22,14 +20,11 @@ export default function RootLayout(
       <body
         className={twMerge(
           inter.className,
-          "relative bg-white text-black dark:bg-black dark:text-white p-2",
+          "relative bg-white text-black dark:bg-black dark:text-white p-2 h-lvh",
         )}
       >
         <ConfigProvider locale={enUS}>
-          <NextAuthProvider>
-            <Navbar />
-            {children}
-          </NextAuthProvider>
+          {children}
         </ConfigProvider>
       </body>
     </html>

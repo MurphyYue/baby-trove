@@ -1,22 +1,10 @@
 
 import React from "react";
-import { getPublishedPostsAndMedia } from "@/app/actions";
-import ImagePreview from './ImagePreview'
+import ImagePreview from '../ImagePreview'
+import { Post } from './actions'
 
-export interface TimelineProps {
-  posts: Post[];
-}
-
-export interface Post {
-  id: number;
-  title?: string;
-  updateTime: string;
-  content?: string;
-  mediaUrls: string[];
-}
-
-export default async function Timeline() {
-  const posts: Post[] = await getPublishedPostsAndMedia();
+export default function Timeline({posts}: {posts: Post[]}) {
+  // const posts: Post[] = await getPublishedPostsAndMedia();
   return (
     <ol className="relative border-s border-gray-200 dark:border-gray-700">
       {posts.map((post) => (
