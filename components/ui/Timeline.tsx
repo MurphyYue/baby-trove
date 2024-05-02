@@ -5,7 +5,7 @@ import { Post } from './actions'
 
 export default function Timeline({posts}: {posts: Post[]}) {
   return (
-    <ol className="relative border-s border-gray-200 dark:border-gray-700 mb-20 mx-2 mt-4">
+    <ol className="relative border-s border-gray-200 dark:border-gray-700 pb-6 mx-2 mt-4">
       {posts.map((post) => (
         <li className="mb-10 ms-6" key={post.id}>
           <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>

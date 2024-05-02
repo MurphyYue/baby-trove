@@ -30,12 +30,12 @@ const Bottom: FC = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 w-full z-[999] bg-white">
+    <div className="fixed bottom-0 left-0 w-full z-[999] bg-white dark:bg-black">
       <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
-      {tabs.map((item) => (
-        <TabBar.Item key={item.key} icon={item.icon} />
-      ))}
-    </TabBar>
+        {tabs.map((item) => (
+          <TabBar.Item key={item.key} icon={item.icon} />
+        ))}
+      </TabBar>
     </div>
   );
 };
