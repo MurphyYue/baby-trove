@@ -16,7 +16,7 @@ export default function ImagePreview({ images }: { images: string[] }) {
                 setVisible(true);
               }}
             >
-              <Image src={url} alt="baby image" fit="cover" />
+              <Image lazy src={url} alt="baby image" fit="cover" />
             </div>
           </div>
         ))}
@@ -30,7 +30,7 @@ export default function ImagePreview({ images }: { images: string[] }) {
                 setVisible(true);
               }}
             >
-              <Image className="h-full w-full" src={url} alt="baby image" fit="fill" />
+              <Image lazy className="h-full w-full" src={url} alt="baby image" fit="fill" />
             </div>
           ))}
         </div>
@@ -44,7 +44,7 @@ export default function ImagePreview({ images }: { images: string[] }) {
               setVisible(true);
             }}
           >
-            <Image width={100} height={100} src={url} alt="baby image" fit="fill" />
+            <Image lazy width={100} height={100} src={url} alt="baby image" fit="fill" />
           </div>
         ))}
       {images.length > 1 ? (

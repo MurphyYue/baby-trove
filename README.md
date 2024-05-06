@@ -15,7 +15,7 @@
 - [x] improve the home page style
 - [x] add picture preview
 - [x] add sign up(user management)
-- [ ] update home page style and no data tip
+- [x] update home page style and no data tip
 
 ## Getting Started
 
