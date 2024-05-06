@@ -1,14 +1,12 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Timeline from './Timeline'
-import { Post } from "./actions";
 import GoPostButton from './GoPostButton'
 import { InfiniteScroll } from "antd-mobile";
-import Loading from "@/app/Loading";
 
 function Home() {
   const [page, setPage] = useState<number>(1);
-  const [data, setData] = useState<Post[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   // const [loading, setLoading] = useState(false);
   async function loadMore() {
