@@ -49,21 +49,21 @@ function Home() {
   }, []);
 
   return (
-    <div className='min-h-full w-full pb-8'>
+    <>
       {data.length > 0 ? (
-        <>
+        <div className='min-h-full w-full pb-8'>
           <Timeline posts={data} />
           <InfiniteScroll loadMore={loadMore} hasMore={hasMore}>
             <InfiniteScrollContent hasMore={hasMore} />
           </InfiniteScroll>
-        </>
+        </div>
       ) : (
-        loading ? <Loading /> : <div className="h-full w-full flex items-center justify-center flex-col">
+        loading ? <Loading /> : <div className="min-h-full w-full flex items-center justify-center flex-col">
           <span className="text-xl mb-2">There is no post </span>
           <GoPostButton />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
