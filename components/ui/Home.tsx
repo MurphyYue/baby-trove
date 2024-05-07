@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Timeline from './Timeline'
 import GoPostButton from './GoPostButton'
-import { InfiniteScroll, DotLoading } from "antd-mobile";
+import { InfiniteScroll, DotLoading, Toast } from "antd-mobile";
 import Loading from "../Loading"
 
 const InfiniteScrollContent = ({ hasMore }: { hasMore?: boolean }) => {
@@ -32,11 +32,18 @@ function Home() {
       const response: any = await fetch(`/api/posts?page=${page}&pageSize=3`, {
         method: "GET",
       });
-      const res = await response.json()
-      setData((val) => [...val, ...res.data]);
-      setHasMore(res.total > data.length);
-      setPage(page + 1);
+      const res = await response.json();
       setLoading(false);
+      if (res.status !== 200) {
+        Toast.show({
+          icon: 'fail',
+          content: res.message,
+        });
+        return;
+      }
+      setData((val) => [...val, ...res.data]);
+      setHasMore(() => res.total > data.length);
+      setPage(page + 1);
     } catch (error) {
       setLoading(false);
     } finally {

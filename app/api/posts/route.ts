@@ -58,7 +58,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       total: total
     });
   } catch (error) {
-    console.error("Error retrieving published posts:", error);
-    throw NextResponse.json({ success: false, message: error, status: 500 })
+    console.log("Error retrieving published posts:", error);
+    return NextResponse.json({ success: false, message: "Error retrieving published posts", status: 500 })
   }
 }
