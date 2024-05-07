@@ -42,7 +42,9 @@ function Home() {
         return;
       }
       setData((val) => [...val, ...res.data]);
-      setHasMore(() => res.total > data.length);
+      setTimeout(() => {
+        setHasMore(res.total > data.length);
+      }, 1);
       setPage(page + 1);
     } catch (error) {
       setLoading(false);
