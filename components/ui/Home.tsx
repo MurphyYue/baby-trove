@@ -2,23 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import Timeline from './Timeline'
 import GoPostButton from './GoPostButton'
-import { InfiniteScroll, DotLoading, Toast } from "antd-mobile";
+import { InfiniteScroll, Toast } from "antd-mobile";
 import Loading from "../Loading"
+import InfiniteScrollContent from "./InfiniteScrollContent"
 
-const InfiniteScrollContent = ({ hasMore }: { hasMore?: boolean }) => {
-  return (
-    <>
-      {hasMore ? (
-        <>
-          <span>Loading</span>
-          <DotLoading />
-        </>
-      ) : (
-        <span>--- no more data ---</span>
-      )}
-    </>
-  )
-}
+const PAGE_SIZE = 5;
 
 function Home() {
   const [page, setPage] = useState<number>(1);
@@ -29,7 +17,7 @@ function Home() {
   async function loadMore() {
     setLoading(true);
     try {
-      const response: any = await fetch(`/api/posts?page=${page}&pageSize=3`, {
+      const response: any = await fetch(`/api/posts?page=${page}&pageSize=${PAGE_SIZE}`, {
         method: "GET",
       });
       const res = await response.json();
