@@ -4,12 +4,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { NextResponse, NextRequest } from "next/server";
 
-const secret = process.env.NEXTAUTH_SECRET;
-
 export async function GET(req: NextRequest, res: NextResponse) {
   const page = req.nextUrl.searchParams.get('page');
   const pageSize = req.nextUrl.searchParams.get("pageSize");
-  console.log(page, pageSize)
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -19,10 +16,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         message: "user session has expired",
       });
     }
+    const offset = (Number(page) - 1) * Number(pageSize);
     // 查询所有 published 为 true 的帖子
     const publishedPosts = await prisma.post.findMany({
       take: Number(pageSize) || 10,
-      skip: (Number(page) - 1) * Number(pageSize),
+      skip: offset,
       where: {
         published: true,
         author: {
@@ -46,7 +44,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
         mediaUrls: mediaUrls,
       };
     });
-    const total = await prisma.post.count();
+    const total = await prisma.post.count({
+      where: {
+        published: true,
+        author: {
+          email: session?.user.email || "",
+        },
+      },
+    });
     return NextResponse.json({
       data: postsWithMedia,
       status: 200,
@@ -54,6 +59,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
   } catch (error) {
     console.error("Error retrieving published posts:", error);
-    return NextResponse.json({ success: false, message: error, status: 500 });
+    throw NextResponse.json({ success: false, message: error, status: 500 })
   }
 }

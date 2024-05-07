@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import Loading from "@/app/Loading";
+import Loading from "@/components/Loading";
 import TabBar from "@/components/TabBar";
 import HomeUi from '@/components/ui/Home';
 
