@@ -8,7 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillDelete } from "react-icons/ai";
-// import { getServerSession } from "next-auth";
+import { Toast } from "antd-mobile";
 
 export default function CreatePostForm() {
   const { data: session, status } = useSession();
@@ -88,7 +88,10 @@ export default function CreatePostForm() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files: FileList | null = e.target.files;
     if (files && (files.length + images.length) > 9) {
-      alert("You can only upload up to 9 images.");
+      Toast.show({
+        icon: 'fail',
+        content: "only upload up to 9 images.",
+      });
       return;
     }
     if (files && files.length < 1) {

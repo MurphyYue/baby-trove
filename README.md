@@ -16,6 +16,8 @@
 - [x] add picture preview
 - [x] add sign up(user management)
 - [x] update home page style and no data tip
+- [ ] optimize home UI from client component to server component
+- [ ] add loading Skeleton to home
 
 ## Getting Started
 
