@@ -4,8 +4,7 @@ import { signOut, signIn,  useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function User() {
-  const { data: session, status } = useSession();
-  console.log("session", session);
+  const { data: session } = useSession();
   return session ? (
     <div className="flex items-center flex-col">
       {session.user?.image && <Image

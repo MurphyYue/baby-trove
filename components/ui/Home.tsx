@@ -56,7 +56,7 @@ function Home() {
         </div>
       ) : (
         loading ? <Loading /> : <div className="min-h-full w-full flex items-center justify-center flex-col">
-          <span className="text-xl mb-2">There is no post </span>
+          <span className="text-xl mb-2">There are no posts</span>
           <GoPostButton />
         </div>
       )}
