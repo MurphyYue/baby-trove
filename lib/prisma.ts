@@ -14,4 +14,14 @@ if (process.env.NODE_ENV === "production") {
   prisma = globalWithPrisma.prisma;
 }
 
+async function prismaDisconnect() {
+  try {
+    const prismaDisconnect = await prisma.$disconnect();
+    // console.log("Disconnected");
+  } catch (error) {
+    console.error(error);
+  }
+}
+export { prismaDisconnect };
+
 export default prisma;
